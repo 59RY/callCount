@@ -2,7 +2,8 @@
  * script.js
  * ジャニーズ当落電話カウンターのスクリプトファイルです。
  * --------------------
- * @version 1.0
+ * @since	1.0
+ * @version	1.1
  * @license	Creative Commons BY-NC 4.0
  * 			{@link https://creativecommons.org/licenses/by-nc/4.0/deed.ja}
  * @author	yuta*ﾟ {@link https://y59.jp/}
@@ -14,6 +15,10 @@
 
 // 電話先
 var callTo = "0570000058";
+
+// Cookie 処理用
+var callArray = [];
+var callArray_poped = true;
 
 // Twitter for iPhoneか？未定義の際のフェイルバック
 if( typeof twitter_for_iPhone !== "boolean" ) {
@@ -166,6 +171,55 @@ function counterAffect(val){
 }
 
 
+/**
+ * callArray 配列に、現在の時間(Unixミリ秒)を入れる
+ * @param	なし
+ * @return	なし
+ * @since	Version 1.1
+**/
+function callArray_push(){
+	callArray.push(String(new Date().getTime()));
+	callArray_poped = false;
+	callArray_save();
+}
+
+/**
+ * callArray 配列から、後方1つを取り除く
+ * @param	なし
+ * @return	なし
+ * @since	Version 1.1
+**/
+function callArray_pop(){
+	if(! callArray_poped){
+		callArray.pop();
+		callArray_poped = true;
+		callArray_save();
+	};
+}
+
+/**
+ * callArray 配列を Cookie に入れる
+ * @param	なし
+ * @return	なし
+ * @since	Version 1.1
+**/
+function callArray_save(){
+	var callArray_string = callArray.join(",");
+	setCookie("callCount_array", callArray_string, 731);
+}
+
+
+/****************************
+ * 即時処理
+*****************************/
+
+// Cookie から ajax 送信用の途中データがあったら、配列に格納する
+var _ic = getCookie("callCount_array");
+if(_ic !== "" && typeof _ic !== "undefined"){
+	callArray = _ic.split(",");
+}
+
+
 /****************************
  * 即時関数
 *****************************/
@@ -177,6 +231,7 @@ $(function($doc){
 	var EVENT_TOUCHSTART = supportTouch ? "touchstart": "mousedown";
 
 	// Cookie から電話カウンターを読み込む。読み込めたら値を表示する
+	// @NOTE: PHP 側と重複しているが、JavaScript 側でも処理
 	var initValue = getCookie("callCount_value");
 	if(initValue !== "" && typeof initValue !== "undefined"){
 		counterAffect(initValue);
@@ -186,6 +241,7 @@ $(function($doc){
 	$($doc).on(EVENT_TOUCHSTART, ".callButton", function(){
 		location.href = "tel:" + callTo;
 		counterSet(1, true);
+		callArray_push();
 	});
 
 	// 電話カウンターを調整する
@@ -199,6 +255,7 @@ $(function($doc){
 			case "-1":
 				// カウンターを1減らす
 				counterSet(-1, true);
+				callArray_pop();
 				break;
 			case "custom":
 				// カウンターをカスタム調整する
@@ -211,6 +268,7 @@ $(function($doc){
 						// Valid Value
 						if(newCount >= 0){
 							counterSet(newCount, false);
+							setCookie("callCount_array", "", -1);
 						} else{
 							alert("注：0 以上の数字を入力してください。");
 						}
@@ -224,6 +282,7 @@ $(function($doc){
 				// カウンターをリセットする
 				if(window.confirm("電話カウンターをリセットしてもよろしいですか?")){
 					counterSet(0, false);
+					setCookie("callCount_array", "", -1);
 				}
 				break;
 			default:
@@ -233,7 +292,8 @@ $(function($doc){
 	});
 
 	// 繋がった処理
-	$($doc).on(EVENT_TOUCHSTART, ".outWent", function(){
+	$($doc).on(EVENT_TOUCHSTART, ".outWent", function(e){
+
 		// 繋がった処理をするかどうかのブーメランを予め定義する
 		var outWentProcess = false;
 		if(twitter_for_iPhone){
@@ -245,9 +305,6 @@ $(function($doc){
 		}
 
 		if(outWentProcess){
-			// Cookie内のカウンターリセット
-			setCookie("callCount_value", "0", -1);
-
 			// .notConnected をフェードアウト → .connected をフェードイン
 			var elem1 = $(".notConnected"), elem2 = $(".connected");
 			elem1.addClass("fadeout");
@@ -258,7 +315,27 @@ $(function($doc){
 			setTimeout(function(){
 				elem2.show();
 			}, 1000);
+
+			// Ajaxで情報送信
+			$.ajax({
+				type: "POST",
+				url: "ajaxdata.php",
+				data: {
+					"counter": $("#callValue").attr("data-value"),
+					"date_array": callArray,
+					"date_send": String(new Date().getTime()),
+				},
+				timeout: 10,
+				dataType: "json",
+				async: false, // true にすると情報が飛ばなくなる
+			});
+
+			// Cookie内のカウンターリセット
+			setCookie("callCount_value", "0", -1);
+			setCookie("callCount_array", "", -1);
+			callArray = [];
 		}
+
 	});
 
 	// シェアボタンを押された処理
