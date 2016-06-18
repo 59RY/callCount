@@ -5,7 +5,7 @@
 	<!-- Base -->
 	<meta charset="UTF-8" />
 	<title>ジャニーズ当落電話カウンター!</title>
-	<link rel="shortcut icon" href="https://y59.jp/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="assets/images/icon.ico" type="image/x-icon" />
 
 	<!-- SEO -->
 	<meta name="author" content="yuta*ﾟ" />
@@ -14,13 +14,16 @@
 	<meta name="description" content="ジャニーズのコンサートの当落で電話をかけた回数を測定するページです。" />
 
 	<!-- OGP -->
-	<meta property="twitter:card" content="summary" />
+	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:site" content="@y59JP" />
 	<meta property="og:title" content="ジャニーズ当落電話カウンター!" />
+	<meta property="og:image" content="https://i.y59.jp/Johnny's/callCount/assets/images/icon-2048.png" />
 	<meta property="og:description" content="ジャニーズのコンサートの当落で電話をかけた回数を測定するページです。" />
 
 	<!-- Extented -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+	<meta property="apple-mobile-web-app-title" content="当落ｶｳﾝﾀｰ" />
+	<link rel="apple-touch-icon-precomposed" href="https://i.y59.jp/Johnny's/callCount/assets/images/icon-2048.png" />
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/style.css" />
