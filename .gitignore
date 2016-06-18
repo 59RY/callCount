@@ -1,0 +1,5 @@
+# Hidden, and Thumbs Files
+.DS_Store
+Desktop.ini
+Thumbs.db
+*.swp
