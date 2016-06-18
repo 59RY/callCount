@@ -249,10 +249,10 @@ $(function($doc){
 	// シェアボタンを押された処理
 	$($doc).on(EVENT_TOUCHSTART, ".share", function(){
 		var shareType = $(this).attr("data-shareto"),
-			myCount = $("#callValue").attr("data-value"),
+		    myCount = $("#callValue").attr("data-value"),
 		    thisURL = location.href,
-			shareText = encodeURI("ジャニーズ当落電話カウンター! 私は" + insertComma(myCount) + "回で繋がりました٩(๑^o^๑)۶"),
-			shareHashTag = encodeURI("当落電話カウンター"),
+		    shareText = encodeURI("ジャニーズ当落電話カウンター! 私は" + insertComma(myCount) + "回で繋がりました٩(๑^o^๑)۶"),
+		    shareHashTag = encodeURI("当落電話カウンター"),
 		    shareURL = "";
 		switch (shareType){
 			case "twitter":

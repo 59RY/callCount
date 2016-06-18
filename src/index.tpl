@@ -14,7 +14,7 @@
 	<meta name="description" content="ジャニーズのコンサートの当落で電話をかけた回数を測定するページです。" />
 
 	<!-- OGP -->
-	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:card" content="summary" />
 	<meta property="twitter:site" content="@y59JP" />
 	<meta property="og:title" content="ジャニーズ当落電話カウンター!" />
 	<meta property="og:image" content="https://i.y59.jp/Johnny's/callCount/assets/images/icon-2048.png" />
