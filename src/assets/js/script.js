@@ -15,6 +15,11 @@
 // 電話先
 var callTo = "0570000058";
 
+// Twitter for iPhoneか？未定義の際のフェイルバック
+if( typeof twitter_for_iPhone !== "boolean" ) {
+	var twitter_for_iPhone = false;
+}
+
 
 /****************************
  * 関数定義
@@ -229,7 +234,17 @@ $(function($doc){
 
 	// 繋がった処理
 	$($doc).on(EVENT_TOUCHSTART, ".outWent", function(){
-		if( window.confirm("当落確認が出来ましたか?") ) {
+		// 繋がった処理をするかどうかのブーメランを予め定義する
+		var outWentProcess = false;
+		if(twitter_for_iPhone){
+			outWentProcess = true;
+		} else {
+			if(window.confirm("当落確認が出来ましたか?")){
+				outWentProcess = true;
+			}
+		}
+
+		if(outWentProcess){
 			// Cookie内のカウンターリセット
 			setCookie("callCount_value", "0", -1);
 
@@ -268,7 +283,11 @@ $(function($doc){
 				break;
 		};
 		if(shareURL !== "") {
-			window.open(shareURL, "_blank");
+			if(twitter_for_iPhone){
+				location.href = shareURL;
+			} else {
+				window.open(shareURL, "_blank");
+			};
 		}
 	});
 

@@ -26,10 +26,10 @@
 	<link rel="apple-touch-icon-precomposed" href="https://i.y59.jp/Johnny's/callCount/assets/images/icon-2048.png" />
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="stylesheet" href="assets/css/style.min.css" />
 
 </head>
-<body>
+<body class="<?= $twitter_for_iPhone ? 'twitter_for_iPhone' : '' ?>">
 	<div id="bodyBox">
 		<div id="bodyBox-inner">
 			<p class="titleCall">ジャニーズ当落電話カウンター!</p>
@@ -54,8 +54,10 @@
 						ｶｳﾝﾀｰ調整:
 						<button class="adjust" data-count="+1">+1</button>
 						<button class="adjust" data-count="-1">-1</button>
+						<?php if( !$twitter_for_iPhone ): ?>
 						<button class="adjust" data-count="custom">手動</button>
 						<button class="adjust" data-count="reset">ﾘｾｯﾄ</button>
+						<?php endif; ?>
 					</p>
 				</div>
 
@@ -88,6 +90,9 @@
 	<!--<![endif]-->
 
 	<!-- JavaScript -->
+	<script>
+		var twitter_for_iPhone = <?= $twitter_for_iPhone ? "true" : "false" ?>;
+	</script>
 	<script src="assets/js/script.min.js"></script>
 
 </body>

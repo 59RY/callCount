@@ -15,6 +15,12 @@ error_reporting(E_ERROR);
 // 現在の電話カウンターを読み込む
 $callValue = (int)$_COOKIE["callCount_value"];
 
+// Twitter for iPhoneか
+$userAgent = $_SERVER["HTTP_USER_AGENT"];
+if (strstr($userAgent, "Twitter for iPhone")){
+	$twitter_for_iPhone = true;
+};
+
 // ページを読み込む
 include_once "index.tpl";
 
