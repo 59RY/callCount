@@ -31,19 +31,19 @@ if( typeof twitter_for_iPhone !== "boolean" ) {
  * @return	String
 **/
 function getCookie(cookieName){
-    var dc = document.cookie, st = "", ed = "", rtn = "";
-    if(dc.length > 0){
-        st = dc.indexOf(cookieName + "=");
-        if(st !== -1){
-            st = st + parseInt(cookieName.length + 1);
-            ed = dc.indexOf(";", st);
-            if(ed === -1){
-				ed = dc.length;
-			}
-            // 値をデコードして返す
-            rtn = unescape(dc.substring(st, ed));
-        }
-    } else{
+	var dc = document.cookie, st = "", ed = "", rtn = "";
+	if(dc.length > 0){
+		st = dc.indexOf(cookieName + "=");
+		if(st !== -1){
+			st = st + parseInt(cookieName.length + 1);
+			ed = dc.indexOf(";", st);
+			if(ed === -1){
+		ed = dc.length;
+		}
+			// 値をデコードして返す
+			rtn = unescape(dc.substring(st, ed));
+		}
+	} else{
 		rtn = "";
 	}
 
@@ -59,29 +59,29 @@ function getCookie(cookieName){
  * @return	なし
 **/
 function setCookie(cookieName, value, expiredays){
-    // path の指定
-    var path = location.pathname, paths = [];
-    // path をフォルダ毎に指定する場合のIE対策
-    paths = path.split("/");
-    if(paths[paths.length - 1] !== ""){
-        paths[paths.length - 1] = "";
-        path = paths.join("/");
-    };
-    // 有効期限の日付
-    var extime = new Date().getTime(),
-	    cltime = new Date(extime + (86400000 * expiredays)),
-        exdate = cltime.toUTCString();
-    // クッキーに保存する文字列を生成
-    var s= "";
-    s += cookieName + "=" + escape(value);
-    s += "; path=" + path;
-    if(expiredays){
-        s += "; expires=" + exdate + "; ";
-    }else{
-        s += "; ";
-    }
-    // クッキーに保存
-    document.cookie = s;
+	// path の指定
+	var path = location.pathname, paths = [];
+	// path をフォルダ毎に指定する場合のIE対策
+	paths = path.split("/");
+	if(paths[paths.length - 1] !== ""){
+		paths[paths.length - 1] = "";
+		path = paths.join("/");
+	};
+	// 有効期限の日付
+	var extime = new Date().getTime(),
+		cltime = new Date(extime + (86400000 * expiredays)),
+		exdate = cltime.toUTCString();
+	// クッキーに保存する文字列を生成
+	var s= "";
+	s += cookieName + "=" + escape(value);
+	s += "; path=" + path;
+	if(expiredays){
+		s += "; expires=" + exdate + "; ";
+	}else{
+		s += "; ";
+	}
+	// クッキーに保存
+	document.cookie = s;
 }
 
 
@@ -264,11 +264,11 @@ $(function($doc){
 	// シェアボタンを押された処理
 	$($doc).on(EVENT_TOUCHSTART, ".share", function(){
 		var shareType = $(this).attr("data-shareto"),
-		    myCount = $("#callValue").attr("data-value"),
-		    thisURL = location.href,
-		    shareText = encodeURI("ジャニーズ当落電話カウンター! 私は" + insertComma(myCount) + "回で繋がりました٩(๑^o^๑)۶"),
-		    shareHashTag = encodeURI("当落電話カウンター"),
-		    shareURL = "";
+			myCount = $("#callValue").attr("data-value"),
+			thisURL = location.href,
+			shareText = encodeURI("ジャニーズ当落電話カウンター! 私は" + insertComma(myCount) + "回で繋がりました٩(๑^o^๑)۶"),
+			shareHashTag = encodeURI("当落電話カウンター"),
+			shareURL = "";
 		switch (shareType){
 			case "twitter":
 				shareURL = "https://twitter.com/share?via=y59JP&text=" + shareText + "&url=" + thisURL + "&hashtags=" + shareHashTag + "&lang=ja";
