@@ -9,8 +9,9 @@
 
 	<!-- SEO -->
 	<meta name="author" content="yuta*ﾟ" />
-	<meta name="robots" content="noindex, follow, archive" />
+	<meta name="robots" content="index, follow, archive" />
 	<meta name="revisit-after" content="5 days" />
+	<meta name="keywords" content="ジャニーズ,電話,当落,カウンター,johnnys,counter" />
 	<meta name="description" content="ジャニーズのコンサートの当落で電話をかけた回数を測定するページです。" />
 
 	<!-- OGP -->
